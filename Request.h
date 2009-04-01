@@ -12,17 +12,28 @@
 
 struct Request
 {
-    char buff[8];
-    tYSPkgHeadStruct m_head;
+    Request(char* data) :
+        m_data(NULL)
+    {
+    }
 
-    const char* data()
+    size_t length() const
     {
-        return buff;
+        return PkgHeadSize + PkgDataSum;
     }
-    unsigned length()
-    {
-        return 8;
-    }
+
+    UCHAR PkgVerM;
+    UCHAR PkgVerS;
+    UCHAR ReqType;
+    UCHAR PkgType[YSPKG_HEADPKG_TYPE_LEN+1];
+    UCHAR PkgSum;
+    UCHAR PkgNum;
+    INT32 PkgDataSum;
+    INT32 PkgDataLen;
+
+    static size_t PkgHeadSize;
+
+    char* m_data;
 };
 
 #endif /* REQUEST_H_ */
